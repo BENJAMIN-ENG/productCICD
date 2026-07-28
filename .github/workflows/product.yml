@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm product
+      - run: npm ci
       - name: Verify app boots
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
