@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,5 +19,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm install
-      - run: npm start
+      - run: npm ci
+      - name: Verify app boots
+        run: |
+          npm start &
+          sleep 5
+          curl --fail http://localhost:3000/health || exit 1
+          kill %1
